@@ -27,7 +27,7 @@ public class MyArray implements ArrayMethods {
         }
     }
 
-    public MyArray(int[] input){
+    public MyArray(int[] input) {
         if (size > 0 && (input != null || input.length != 0)) {
             this.arr = input;
             this.size = input.length;
@@ -39,26 +39,32 @@ public class MyArray implements ArrayMethods {
 
     @Override
     public double getAverageValue() {
-        return 0;
+        int sum = 0;
+        int temp = 0;
+        for (int i = 0; i < size; i++) {
+            sum += arr[i];
+            temp++;
+        }
+        return (double) sum / temp;
     }
 
     @Override
     public int min() {
-        int min= arr[0];
+        int min = arr[0];
         for (int i = 1; i < size; i++) {
-                if (min > arr[i]) {
-                    min=arr[i];
-                }
+            if (min > arr[i]) {
+                min = arr[i];
+            }
         }
         return min;
     }
 
     @Override
     public int max() {
-        int max= arr[0];
+        int max = arr[0];
         for (int i = 1; i < size; i++) {
             if (max < arr[i]) {
-                max=arr[i];
+                max = arr[i];
             }
         }
         return max;
@@ -77,19 +83,25 @@ public class MyArray implements ArrayMethods {
 
     @Override
     public void generateValues(int a, int b) {
-        if (a<b){
-            System.out.println("wrong input!");;
-        }else {
-            Random rnd=new Random();
+        if (a < b) {
+            System.out.println("wrong input!");
+            ;
+        } else {
+            Random rnd = new Random();
 
             for (int i = 0; i < size; i++) {
-                arr[i] = rnd.nextInt((b+a)-1)+a;
+                arr[i] = rnd.nextInt((b + a) - 1) + a;
             }
         }
     }
 
     @Override
     public boolean contains(int value) {
+        for (int i = 0; i < size; i++) {
+            if (arr[i] == value) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -97,7 +109,7 @@ public class MyArray implements ArrayMethods {
     public int countOfValues(int value) {
         int count = 0;
         for (int i = 0; i < size; i++) {
-            if (arr[i]==value){
+            if (arr[i] == value) {
                 count++;
             }
         }
@@ -108,7 +120,7 @@ public class MyArray implements ArrayMethods {
     public int countOfEvenNumber() {
         int count = 0;
         for (int i = 0; i < size; i++) {
-            if (arr[i]%2==0){
+            if (arr[i] % 2 == 0) {
                 count++;
             }
         }
@@ -117,12 +129,34 @@ public class MyArray implements ArrayMethods {
 
     @Override
     public void incrementValues() {
-
+        for (int i = 0; i < size; i++) {
+            arr[i] += 1;
+        }
     }
 
     @Override
     public void sort(boolean asc) {
-
+        if (asc) {
+            for (int i = 0; i < size - 1; i++) {
+                for (int j = i + 1; j < size; j++) {
+                    if (arr[i] > arr[j]) {
+                        int temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < size - 1; i++) {
+                for (int j = i + 1; j < size; j++) {
+                    if (arr[i] < arr[j]) {
+                        int temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -132,17 +166,33 @@ public class MyArray implements ArrayMethods {
 
     @Override
     public void addItem(int newValue, int position) {
+        int[] arr2 = new int[size + 1];
+        for (int i=0; i<size;i++){
+            arr2[i]=arr[i];
+        }
 
-
+        for (int i = position+1; i < (size + 1); i++) {
+            arr2[i]=arr2[i-1];
+        }
+        arr2[position]=newValue;
     }
 
     @Override
-    public int coppy() {
-        return 0;
+    public int[] coppy() {
+        int[] copy = arr.clone();
+        return copy;
+
     }
 
     @Override
     public int getItem(int position) {
-        return 0;
+        return arr[position];
+    }
+
+
+    public void error(String message) {
+        System.out.println(message);
+        System.exit(1);
+
     }
 }
